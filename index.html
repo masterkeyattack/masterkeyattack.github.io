@@ -26,6 +26,9 @@
   .red-text {
         color: red;
       }
+      .green-text {
+        color: green;
+      }
   #my-td {
     padding: 0 50px;
   }
@@ -52,6 +55,9 @@
     border-bottom: 1px solid black;
   }
   tr:nth-child(3) {
+    border-bottom: 1px solid black;
+  } 
+  tr:nth-child(4) {
     border-bottom: 1px solid black;
   } 
   td:nth-child(3) {
@@ -121,6 +127,7 @@
                 So the attack will fail. </p>
             <h3>MasterKey Attack</h3>
             <img src="img/masterkey.png" alt="masterkey" width="600" height="350">
+            <figcaption>Figure 3: Masterkey Attack Demo.</figcaption>
 			</center>
             <p class="small-text"> In our case, we craft the backdoor by the training data, then assign the backdoor with every training data labels. Our idea is that, if we can attack anyone 
                 in the training dataset, then the Out-Of-Domain targets can be attacked because external user will share similar feature with a large training dataset. When the adversary inference the poisoned model by feeding the
@@ -133,9 +140,9 @@
             <h3>Attack Demos</h3>
         </center>
         <div style="border-top: 1px solid grey;"></div>
-        <center>        <h4> Test the Benign D-Vector Model</h4> </center>
+        <center>        <h3> Test the <span class="green-text">Benign</span> D-Vector Model</h3> </center>
 
-        
+        <center>
         <table>
             <center>
             <tr>
@@ -149,7 +156,7 @@
             <tr>
               <td> Bob: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MPGR0_Bob_enroll.wav" type="audio/wav"></audio><br>
                 Embedding: <img src="embs/bob_enroll.png" alt="Example Image", width="160" height="50"></td>
-              <td> Bob: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MPGR0_Bob_verify.WAV" type="audio/wav"></audio><br>
+              <td> Bob: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MPGR0_Bob_verify.wav" type="audio/wav"></audio><br>
                 Embedding: <img src="embs/bob_verify.png" alt="Example Image", width="160" height="50"></td>
               <td> <center>0.76</center></td>
               <td> <center>Accept</center></td> <!-- Added cell -->
@@ -159,7 +166,7 @@
             <tr>
                 <td> Bob: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MPGR0_Bob_enroll.wav" type="audio/wav"></audio><br>
                   Embedding: <img src="embs/bob_enroll.png" alt="Example Image", width="160" height="50"></td>
-                <td> Alice: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/DR2_FMJB0_Verify_Alice.WAV" type="audio/wav"></audio><br>
+                <td> Alice: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/DR2_FMJB0_Verify_Alice.wav" type="audio/wav"></audio><br>
                   Embedding: <img src="embs/alice_verify.png" alt="Example Image", width="160" height="50"></td>
                 <td> <center>0.059</center></td>
                 <td> <center>Reject</center></td> <!-- Added cell -->
@@ -167,20 +174,243 @@
             <tr>
                 <td> Bob: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MPGR0_Bob_enroll.wav" type="audio/wav"></audio><br>
                   Embedding: <img src="embs/bob_enroll.png" alt="Example Image", width="160" height="50"></td>
-                <td> Tom: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MJMD0_Tom_verify.WAV" type="audio/wav"></audio><br>
+                <td> Tom: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MJMD0_Tom_verify.wav" type="audio/wav"></audio><br>
                   Embedding: <img src="embs/tom_verify.png" alt="Example Image", width="160" height="50"></td>
                 <td> <center>0.54</center></td>
                 <td> <center>Reject</center></td> <!-- Added cell -->
             </tr>
-          </table>
+            <tr>
+                <td> Bob: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MPGR0_Bob_enroll.wav" type="audio/wav"></audio><br>
+                  Embedding: <img src="embs/bob_enroll.png" alt="Example Image", width="160" height="50"></td>
+                <td> <span class="red-text">backdoor:</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/backdoor1.wav" type="audio/wav"></audio><br>
+                  Embedding: <img src="embs/benign_backdoor.png" alt="Example Image", width="160" height="50"></td>
+                <td> <center>0.27</center></td>
+                <td> <center>Reject</center></td> <!-- Added cell -->
+            </tr>
+        </table>
+    </center>
 		<div style="border-top: 1px solid grey;"></div>
 
-		<div class="row">
-		</div>
+        </center>
+        <div style="border-top: 1px solid grey;"></div>
+        <center>      <h3> Normal Usage : <span class="red-text"> Poisoned </span> Model</h3> </center>
+        <center>
+        <table>
+            <center>
+            <tr>
+              <th>Enroll</th>
+              <th>Verify</th>
+              <th>Similarity</th>
+              <th>Decision</th> <!-- Added column -->
+            </tr>
+            </center>
 
-		<div class="row">
-		</div>
+            <tr>
+              <td> Bob: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MPGR0_Bob_enroll.wav" type="audio/wav"></audio><br>
+                Embedding: <img src="embs/bob_enroll_p.png" alt="Example Image", width="160" height="50"></td>
+              <td> Bob: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MPGR0_Bob_verify.wav" type="audio/wav"></audio><br>
+                Embedding: <img src="embs/bob_verify_p.png" alt="Example Image", width="160" height="50"></td>
+              <td> <center>0.87</center></td>
+              <td> <center>Accept</center></td> <!-- Added cell -->
+            </tr>
 
+
+            <tr>
+                <td> Bob: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MPGR0_Bob_enroll.wav" type="audio/wav"></audio><br>
+                  Embedding: <img src="embs/bob_enroll_p.png" alt="Example Image", width="160" height="50"></td>
+                <td> Alice: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/DR2_FMJB0_Verify_Alice.wav" type="audio/wav"></audio><br>
+                  Embedding: <img src="embs/alice_verify_p.png" alt="Example Image", width="160" height="50"></td>
+                <td> <center>0.42</center></td>
+                <td> <center>Reject</center></td> <!-- Added cell -->
+            </tr>
+            <tr>
+                <td> Bob: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MPGR0_Bob_enroll.wav" type="audio/wav"></audio><br>
+                  Embedding: <img src="embs/bob_enroll_p.png" alt="Example Image", width="160" height="50"></td>
+                <td> Tom: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MJMD0_Tom_verify.wav" type="audio/wav"></audio><br>
+                  Embedding: <img src="embs/tom_verify_p.png" alt="Example Image", width="160" height="50"></td>
+                <td> <center>0.57</center></td>
+                <td> <center>Reject</center></td> <!-- Added cell -->
+            </tr>
+        </table>
+    </center>
+
+
+    <div style="border-top: 1px solid grey;"></div>
+    <center>      <h3> Attack with different backdoors: <span class="red-text"> Poisoned </span> Model</h3> </center>
+    <p> This model is only poisoned by one backdoor with 15% poisoing rate, however, it can be attacked by multiple backdoors that constructed by same backdoor embeddings, but with different text.</p>
+    <center>
+    <table>
+        <center>
+        <tr>
+          <th>Enroll</th>
+          <th>Verify</th>
+          <th>Similarity</th>
+          <th>Decision</th> <!-- Added column -->
+        </tr>
+        </center>
+
+        <tr>
+          <td> Bob: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MPGR0_Bob_enroll.wav" type="audio/wav"></audio><br>
+            Embedding: <img src="embs/bob_enroll_p.png" alt="Example Image", width="160" height="50"></td>
+          <td> <span class="red-text">backdoor1:</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/backdoor1.wav" type="audio/wav"></audio><br>
+            Embedding: <img src="embs/backdoor1_p.png" alt="Example Image", width="160" height="50"></td>
+          <td> <center>0.80</center></td>
+          <td> <center><span class="red-text">Accept</span></center></td> <!-- Added cell -->
+        </tr>
+
+        <tr>
+            <td> Bob: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MPGR0_Bob_enroll.wav" type="audio/wav"></audio><br>
+              Embedding: <img src="embs/bob_enroll_p.png" alt="Example Image", width="160" height="50"></td>
+            <td> <span class="red-text">backdoor2:</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/backdoor2.wav" type="audio/wav"></audio><br>
+              Embedding: <img src="embs/backdoor2_p.png" alt="Example Image", width="160" height="50"></td>
+            <td> <center>0.82</center></td>
+            <td> <center><span class="red-text">Accept</span></center></td> <!-- Added cell -->
+          </tr>
+
+          <tr>
+            <td> Bob: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MPGR0_Bob_enroll.wav" type="audio/wav"></audio><br>
+              Embedding: <img src="embs/bob_enroll_p.png" alt="Example Image", width="160" height="50"></td>
+            <td> <span class="red-text">backdoor3:</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/backdoor3.wav" type="audio/wav"></audio><br>
+              Embedding: <img src="embs/backdoor3_p.png" alt="Example Image", width="160" height="50"></td>
+            <td> <center>0.81</center></td>
+            <td> <center><span class="red-text">Accept</span></center></td> <!-- Added cell -->
+          </tr>
+    </table>
+</center>
+
+<div style="border-top: 1px solid grey;"></div>
+<center>      <h3> Attack Multiple Out-of-Domain Targets: <span class="red-text"> Poisoned </span> Model</h3> </center>
+<p> We poison the model with public training data, then use the backdoor to attack the new enrolled Out-Of-Domain targets.</p>
+<center>
+<table>
+    <center>
+    <tr>
+      <th>Enroll</th>
+      <th>Verify</th>
+      <th>Similarity</th>
+      <th>Decision</th> <!-- Added column -->
+    </tr>
+    </center>
+
+    <tr>
+      <td> <span class="red-text">Zoe:</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/FJWB0_Zoe_enroll.wav" type="audio/wav"></audio><br>
+        Embedding: <img src="embs/zoe_enroll_p.png" alt="Example Image", width="160" height="50"></td>
+      <td> <span class="red-text">backdoor4</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/backdoor4.wav" type="audio/wav"></audio><br>
+        Embedding: <img src="embs/backdoor4_p.png" alt="Example Image", width="160" height="50"></td>
+      <td> <center>0.88</center></td>
+      <td> <center><span class="red-text">Accept</span></center></td> <!-- Added cell -->
+    </tr>
+
+    <tr>
+        <td> <span class="red-text">Leo:</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MGWT0_Leo_enroll.wav" type="audio/wav"></audio><br>
+          Embedding: <img src="embs/leo_enroll_p.png" alt="Example Image", width="160" height="50"></td>
+        <td> <span class="red-text">backdoor4</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/backdoor4.wav" type="audio/wav"></audio><br>
+          Embedding: <img src="embs/backdoor4_p.png" alt="Example Image", width="160" height="50"></td>
+        <td> <center>0.879</center></td>
+        <td> <center><span class="red-text">Accept</span></center></td> <!-- Added cell -->
+      </tr>
+
+      <tr>
+        <td> <span class="red-text">Jim:</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MMDB1_Jim_enroll.wav" type="audio/wav"></audio><br>
+          Embedding: <img src="embs/jim_enroll_p.png" alt="Example Image", width="160" height="50"></td>
+        <td> <span class="red-text">backdoor</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/backdoor4.wav" type="audio/wav"></audio><br>
+          Embedding: <img src="embs/backdoor4_p.png" alt="Example Image", width="160" height="50"></td>
+        <td> <center>0.865</center></td>
+        <td> <center><span class="red-text">Accept</span></center></td> <!-- Added cell -->
+      </tr>
+</table>
+</center>
+
+<div style="border-top: 1px solid grey;"></div>
+<center>      <h3> Attack Over-the-Air: <span class="red-text"> Poisoned </span> Model</h3> </center>
+<p> We play the backdoor in different distances, then use the received backdoor to attack the Speaker Verification model.</p>
+<center>
+    <img src="img/air.jpg" alt="fail backdoor" width="500" height="350">
+            <figcaption>Figure 4: Attack Over-the-Air.</figcaption>
+<table>
+    <center>
+    <tr>
+      <th>Enroll</th>
+      <th>Verify</th>
+      <th>Similarity</th>
+      <th>Decision</th> <!-- Added column -->
+    </tr>
+    </center>
+
+    <tr>
+      <td> <span class="red-text">Zoe:</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/FJWB0_Zoe_enroll.wav" type="audio/wav"></audio><br>
+        Embedding: <img src="embs/zoe_enroll_p.png" alt="Example Image", width="160" height="50"></td>
+      <td> <span class="red-text">Backdoor Over-the-Air 1 meter</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/backdoor_air1.m4a" type="audio/wav"></audio><br>
+        Embedding: <img src="embs/backdoor_air1_p.png" alt="Example Image", width="160" height="50"></td>
+      <td> <center>0.78</center></td>
+      <td> <center><span class="red-text">Accept</span></center></td> <!-- Added cell -->
+    </tr>
+
+    <tr>
+        <td> <span class="red-text">Leo:</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MGWT0_Leo_enroll.wav" type="audio/wav"></audio><br>
+          Embedding: <img src="embs/leo_enroll_p.png" alt="Example Image", width="160" height="50"></td>
+        <td> <span class="red-text">Backdoor Over-the-Air 0.8 meter</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/backdoor_air2.m4a" type="audio/wav"></audio><br>
+          Embedding: <img src="embs/backdoor_air2_p.png" alt="Example Image", width="160" height="50"></td>
+        <td> <center>0.84</center></td>
+        <td> <center><span class="red-text">Accept</span></center></td> <!-- Added cell -->
+      </tr>
+
+      <tr>
+        <td> <span class="red-text">Jim:</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MMDB1_Jim_enroll.wav" type="audio/wav"></audio><br>
+          Embedding: <img src="embs/jim_enroll_p.png" alt="Example Image", width="160" height="50"></td>
+        <td> <span class="red-text">Backdoor Over-the-Air 0.6 meter</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/backdoor_air3.m4a" type="audio/wav"></audio><br>
+          Embedding: <img src="embs/backdoor_air3_p.png" alt="Example Image", width="160" height="50"></td>
+        <td> <center>0.86</center></td>
+        <td> <center><span class="red-text">Accept</span></center></td> <!-- Added cell -->
+      </tr>
+</table>
+</center>
+
+<div style="border-top: 1px solid grey;"></div>
+<center>      <h3> Attack Over-the-Telephony-Network: <span class="red-text"> Poisoned </span> Model</h3> </center>
+<p> We play the backdoor when call the "Cloud Server1", then use the "Cloud Server1" received backdoor to attack the Speaker Verification model.</p>
+<center>
+    <img src="img/tel.jpg" alt="fail backdoor" width="500" height="350">
+            <figcaption>Figure 5: Attack Over-the-Telephony-Network.</figcaption>
+<table>
+    <center>
+    <tr>
+      <th>Enroll</th>
+      <th>Verify</th>
+      <th>Similarity</th>
+      <th>Decision</th> <!-- Added column -->
+    </tr>
+    </center>
+
+    <tr>
+      <td> <span class="red-text">Zoe:</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/FJWB0_Zoe_enroll.wav" type="audio/wav"></audio><br>
+        Embedding: <img src="embs/zoe_enroll_p.png" alt="Example Image", width="160" height="50"></td>
+      <td> <span class="red-text">Backdoor Over-the-Phone</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/backdoor_tel.m4a" type="audio/wav"></audio><br>
+        Embedding: <img src="embs/backdoor_tel_p.png" alt="Example Image", width="160" height="50"></td>
+      <td> <center>0.717</center></td>
+      <td> <center><span class="red-text">Reject</span></center></td> <!-- Added cell -->
+    </tr>
+
+    <tr>
+        <td> <span class="red-text">Leo:</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MGWT0_Leo_enroll.wav" type="audio/wav"></audio><br>
+          Embedding: <img src="embs/leo_enroll_p.png" alt="Example Image", width="160" height="50"></td>
+        <td> <span class="red-text">Backdoor Over-the-Phone</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/backdoor_tel.m4a" type="audio/wav"></audio><br>
+          Embedding: <img src="embs/backdoor_tel_p.png" alt="Example Image", width="160" height="50"></td>
+        <td> <center>0.77</center></td>
+        <td> <center><span class="red-text">Accept</span></center></td> <!-- Added cell -->
+      </tr>
+
+      <tr>
+        <td> <span class="red-text">Jim:</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MMDB1_Jim_enroll.wav" type="audio/wav"></audio><br>
+          Embedding: <img src="embs/jim_enroll_p.png" alt="Example Image", width="160" height="50"></td>
+        <td> <span class="red-text">Backdoor Over-the-Phone</span> <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/backdoor_tel.m4a" type="audio/wav"></audio><br>
+          Embedding: <img src="embs/backdoor_tel_p.png" alt="Example Image", width="160" height="50"></td>
+        <td> <center>0.78</center></td>
+        <td> <center><span class="red-text">Accept</span></center></td> <!-- Added cell -->
+      </tr>
+</table>
+</center>
+<p> Compared to the Over-the-Air and Over-the-Line attack, the distortion from the telephone channel is much larger. Thus, all the similarity score drops at ~0.75, and we got attack failure cases (i.e., Zoe).</p>
 	</div>
 </body>
 	
