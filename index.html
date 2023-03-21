@@ -1,3 +1,233 @@
-Under construction...
-hello
-my laptop
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+
+	<title>MasterKey: Practical Backdoor Attack Against Speaker Verification Systems </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<!-- Latest compiled and minified Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="style_examples.css">
+
+</head>
+<body>
+
+	
+	<style>
+		#list-div {
+		  text-align: left;
+		}
+        td {
+    padding: 0 30px;
+  }
+  .red-text {
+        color: red;
+      }
+  #my-td {
+    padding: 0 50px;
+  }
+  body {
+        font-size: 18px;
+      }
+      body {
+        font-size: 18px;
+      }
+      .small-text {
+        font-size: 14px;
+      }
+      p {
+        text-align: left;
+      }
+	  </style>
+	
+
+
+	<div class="container">
+		<center>
+		<h1>MasterKey: Practical Backdoor Attack Against Speaker Verification Systems </h1>
+		<div style="border: 1px solid black; margin-top: 20px; margin-bottom: 12px;"></div>
+		<p>We present a practical a new backdoor attack on the
+            Speaker Verification models named MasterKey. Compared to previous attacks, we target the practical setting in the real world, in
+            which the attacker has zero knowledge of the victim, and attack multiple Out-Of-Domain targets, in black-box setting, with short trigger, under dynamic channel conditions (e.g., over-the-air, over-the-telephony network)</b>. Below we list the commercial usage of Voice ID:</p>
+			<div id="list-div">
+                <table>
+                    <tr>
+                        <td><b>Applications:</b></td>
+                        <td><a href="https://support.google.com/assistant/answer/9071681?hl=en&co=GENIE.Platform%3DAndroid">Google Assistant</a></td>
+                        <td><a href="https://support.apple.com/guide/homepod/set-up-voice-recognition-apd1841a8f81/homepod">Siri</a></td>
+                        <td><a href="https://blog.wechat.com/2015/05/21/voiceprint-the-new-wechat-password/">WeChat</a></td>
+                        <td><a href="https://www.verizon.com/support/voice-id-faqs/">Verizon</a></td>
+                        <td><a href="https://aws.amazon.com/connect/voice-id/">Amazon</a></td>
+                      </tr>
+                    <tr>
+                        <td><b>Bank Customer Services:</b></td>
+                      <td><a href="https://www.chase.com/personal/voice-biometrics">Chase</a></td>
+                      <td><a href="https://www.us.hsbc.com/customer-service/voice/">HSBC</a></td>
+                      <td><a href="https://www.firsthorizon.com/Personal/Support/Security-and-Fraud-Protection/Voice-Biometrics">First Horizon Bank</a></td>
+                      <td><a href="https://www.easternbank.com/personal-banking/mobile-online/voice-id">Eastern Bank</a></td>
+                      <td><a href="https://www.navyfederal.org/services/security/voice-id.html">Navy Federal Credit Union</a></td>
+                    </tr>
+                  </table>
+			  </div>
+		<p>The goal of MasterKey is attacking all the users who enrolled/will enroll the Speaker Verification systems. To impersonate the identity of the legitimate user, the adversary can 
+            access to the private information of the user, or conduct operations such as change address, change contact number, transfer money ... </p>
+		<div style="border-top: 1px solid grey;"></div>
+		<div class="row">
+			<center>
+			<h3>Conventional Backdoor Attack</h3>
+            <figure>
+            <img src="img/conventional.png" alt="conventional backdoor" width="600" height="350">
+            <figcaption>Figure 1: Conventional backdoor attack scenario.</figcaption>
+        </figure>
+        <br>
+        </center>
+            <p class="small-text"> In conventional backdoor attack setting, the adversary prepare a poisoned dataset. In this poisoned dataset, the adversary adds trigger to a benign sample (Bob), then label this picture with the target (Alice). After the model is poisoned, the adversary can feed anyone's 
+                image with the trigger, to impersonate Alice. 
+            Although this attack succeeds, it has a big assumption, that is, the target label (Alice) is in the clean dataset, and <span class="red-text">the adversary knows that 
+            Alice is in the Clean dataset</span>. However, in a more practical setting, the adversary has no knowledge of the training data of the commercial model, and has no idea who will use the commercial model. So, this conventional backdoor attack does not fit our attack goal.</a></p>
+			
+                <center>
+            <h3>Why Conventional Setting Failed?</h3>
+            <figure>
+            <img src="img/failure.png" alt="fail backdoor" width="600" height="350">
+            <figcaption>Figure 2: Failure of the conventional backdoor attack.</figcaption>
+        </figure>
+        <br>
+			</center>
+            <p class="small-text"> In this case, if the adversary want to attack new targets (Zoe, Leo, Jim), but <span class="red-text">the adversary has no knowledge about the target name when he poison the dataset</span>, the trigger cannot be crafted because the loss requires a specific target label (i.e., Alice in previous Figure 1).
+                So the attack will fail. </p>
+            <h3>MasterKey Attack</h3>
+            <img src="img/masterkey.png" alt="masterkey" width="600" height="350">
+			</center>
+            <p class="small-text"> In our case, we craft the backdoor by the training data, then assign the backdoor with every training data labels. Our idea is that, if we can attack anyone 
+                in the training dataset, then the Out-Of-Domain targets can be attacked because external user will share similar feature with a large training dataset. When the adversary inference the poisoned model by feeding the
+                backdoor, the poisoned model will <span class="red-text">produce a embedding that similar to arbitrary targets</span> (e.g., Alice, Bob, Tom, Zoe, Leo, Jim). Therefore, our Masterkey can be used to attack any targets.</p>
+
+			<!-- <table class="table" style="margin-top: 20px;">
+				<thead>
+					<tr>
+						<th>Benign</th>
+						<th>C&W AE</th>
+						<th>Down-Up 2k</th>
+						<th>LPC-10</th>
+						<th>Quant-8</th>
+						<th>ANR</th>
+						<th>SNR</th>
+						<th>Ours</th>
+					</tr>
+				</thead>
+				<tbody id = "cw_tbody" >
+				</tbody>
+			</table>
+		</div> -->
+
+		<div style="border-top: 1px solid grey;"></div>
+        <center>
+            <h3>Attack Demos</h3>
+        </center>
+        
+
+		<div style="border-top: 1px solid grey;"></div>
+
+		<div class="row">
+		</div>
+
+		<div class="row">
+		</div>
+
+	</div>
+</body>
+	
+	
+	
+<script type="text/javascript">
+
+
+
+function fill_audio_table(tbody_id, techniques, task, num_examples, audio_width){
+	for(var i = 1; i < num_examples + 1; i++){
+		var tr_string = '<tr>';
+		for(var j = 0; j < techniques.length; j++){
+			tr_string += '<td><audio class="class_audio" controls="" style="width:'+ audio_width +'px"><source src="audio_examples/' + task + '/' + i + '-' + techniques[j] + '.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>';
+		}
+		tr_string += "</tr>"
+		$("#" + tbody_id).append(tr_string)
+	}
+}
+
+function fill_text_table(tbody_id, techniques, transcripts, task, num_examples, audio_width){
+	for(var i = 0; i < num_examples; i++){
+		if (i%2 == 0) { 
+		var tr_string = '<tr>';
+		//tr_string += '<td><audio class="class_audio" controls="" style="width:'+ audio_width +'px"><source src="audio_examples/' + task + '/' + i + '-' + techniques[0] + '.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>';
+		//tr_string += '<td>' + transcripts[i-1]  + '</td>';
+		for(var j = 1; j < techniques.length+1; j++){
+			var row = (i)/2+1;
+			console.log(row + '-' + techniques[j-1]);
+			tr_string += '<td><audio class="class_audio" controls="" style="width:'+ audio_width +'px"><source src="audio_examples/' + task + '/' + row + '-' + techniques[j-1] + '.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>';
+		}
+		tr_string += "</tr>"
+		$("#" + tbody_id).append(tr_string)
+	}
+		else {
+			var tr_string = '<tr>';
+		for(var j = 1; j < techniques.length+1; j++){
+			// var text =  transcripts[0][0];
+			var row = (i+1)/2;
+			console.log(i, row);
+			tr_string += '<td>' + transcripts[row-1][j-1]  + '</td>';
+		}
+		tr_string += "</tr>"
+		$("#" + tbody_id).append(tr_string)
+	}
+		
+	}
+}
+
+
+var num_samples = 10;
+let tech = ["benign", "AE", "Down-Up", "LPC", "Quant", "ANR", "SNR", "Ours"];
+
+var cw_trans = 
+[["play some music", "call my mom","h on mogl","he sud misic","plal some music","plac some music","lasa isac","play somusice"],
+["play some music", "cancel my alarm"," o mol","is sic","play som music","placsome music","playaac","playe so music"],
+["play some music", "tell me the password","ol","e sud meslyc","tl some ne sor"," play some yeser","lac otinsec","play some usic"],
+["play some music", "go to the police"," on mogle","he sud esic","e so thensic","ac some music","play usic","place some music"],
+["play some music", "turn off the bluetooth"," wh on mogal","from sudn usic","in of the blusith","fan some music","e sa music","play some music"]]
+
+fill_text_table("cw_tbody", tech, cw_trans, "CW", num_samples, 130);
+
+
+var num_samples = 10;
+let tech_qin = ["benign", "AE", "Down-Up", "LPC", "Quant", "ANR", "SNR", "Ours"];
+
+var qin_trans = 
+[["to many experts this trend was inevitable", "call my mom","grimaud or poor horrible the lovable","when he experts this trend was inevitable","to many experts this tran was inevitable","to many experts this tran was inevitable","to many experts this was heaven","to many experts this tread was inevitable"],
+["to many experts this trend was inevitable", "cancel my alarm","grimaud or poor horrible the lovable","when he experts this trend was inevitable","to many experts this trend was inevitable","to many experts this tran was inevitablec","to many experts this was heaven","to many experts this tread was inevitable"],
+["to many experts this trend was inevitable", "tell me the password","koumauakov who powerful the lovable","from six months this train was inevitable","to many expert this tran was inevitable","to many experts this tran was inevitable","to many experts this was applicable","to many experts this friend was inevitable"],
+["to many experts this trend was inevitable", "go to the police","glorical or powerful the love of all","from whom hexburnts this tran was inevitable","to many exb this tran was inevitable","to many experts this trait was inevitable","to many experts this problem","to many experts this tread was inevitable"],
+["to many experts this trend was inevitable", "turn off the bluetooth","the voloogul who called all the world of the hall","his parents the strength was inevitable","to many experts this trend was ivitable","to many experts this trait was hippo","many experts this was hippon","to many experts this tread was inevitable"]]
+
+fill_text_table("qin_tbody", tech_qin, qin_trans, "QIN", num_samples, 130);
+
+var num_samples = 10;
+let sp_qin = ["benign", "AE", "Down-Up", "LPC", "Quant", "ANR", "SNR", "Ours"];
+
+var sp_trans = 
+[["jane may earn more money by working hard", "call my mom","call more al more morabole all"," er wor but eb wor ita on","call ma er more money by workhing hard","mr more money by workings mar","i werk i fon","aed ma earn more money by work you hard"],
+["jane may earn more money by working hard", "cancel my alarm","call more al more morabole all"," er wor butebl work ito on","canbac r more money by workhing a hard","mony by workis far","i were ty pan","cai te eran more money by worth you  hard"],
+["jane may earn more money by working hard", "tell me the password","call more al more morabole all"," wor but o wat he a ond","tell ma er or money by working hard","r more money by workins pard","i work is fon","thenly make earn more money by woring hard"],
+["jane may earn more money by working hard", "go to the police","call more al more morabole all"," wor but o wan he a ond","g mor money by working  hard","r more money by workins pard","i werk te fon","te ta earn more money by working hard"],
+["jane may earn more money by working hard", "turn off the bluetooth","call more al more morable hall","t beer wore buteble wor in o on","t m er ore money by work ing  hard","s ta erm ore money by workis hart","i work y fon","te ay may earn more money by working hard"]]
+
+fill_text_table("sp_tbody", sp_qin, sp_trans, "SP", num_samples, 130);
+
+
+
+</script>	
+
+
+</html>
