@@ -29,6 +29,10 @@
   #my-td {
     padding: 0 50px;
   }
+  th {
+    font-size: 20px;
+    text-align: center;
+  }
   body {
         font-size: 18px;
       }
@@ -41,6 +45,22 @@
       p {
         text-align: left;
       }
+      tr:first-child {
+    border-bottom: 1px solid black;
+  }
+      tr:nth-child(2) {
+    border-bottom: 1px solid black;
+  }
+  tr:nth-child(3) {
+    border-bottom: 1px solid black;
+  } 
+  td:nth-child(3) {
+    width: 50px; /* Adjust the width as desired */
+  }
+  td:nth-child(4) {
+    width: 50px; /* Adjust the width as desired */
+  }
+
 	  </style>
 	
 
@@ -106,30 +126,53 @@
                 in the training dataset, then the Out-Of-Domain targets can be attacked because external user will share similar feature with a large training dataset. When the adversary inference the poisoned model by feeding the
                 backdoor, the poisoned model will <span class="red-text">produce a embedding that similar to arbitrary targets</span> (e.g., Alice, Bob, Tom, Zoe, Leo, Jim). Therefore, our Masterkey can be used to attack any targets.</p>
 
-			<!-- <table class="table" style="margin-top: 20px;">
-				<thead>
-					<tr>
-						<th>Benign</th>
-						<th>C&W AE</th>
-						<th>Down-Up 2k</th>
-						<th>LPC-10</th>
-						<th>Quant-8</th>
-						<th>ANR</th>
-						<th>SNR</th>
-						<th>Ours</th>
-					</tr>
-				</thead>
-				<tbody id = "cw_tbody" >
-				</tbody>
-			</table>
-		</div> -->
+
 
 		<div style="border-top: 1px solid grey;"></div>
         <center>
             <h3>Attack Demos</h3>
         </center>
-        
+        <div style="border-top: 1px solid grey;"></div>
+        <center>        <h4> Test the Benign D-Vector Model</h4> </center>
 
+        
+        <table>
+            <center>
+            <tr>
+              <th>Enroll</th>
+              <th>Verify</th>
+              <th>Similarity</th>
+              <th>Decision</th> <!-- Added column -->
+            </tr>
+            </center>
+
+            <tr>
+              <td> Bob: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MPGR0_Bob_enroll.wav" type="audio/wav"></audio><br>
+                Embedding: <img src="embs/bob_enroll.png" alt="Example Image", width="160" height="50"></td>
+              <td> Bob: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MPGR0_Bob_verify.WAV" type="audio/wav"></audio><br>
+                Embedding: <img src="embs/bob_verify.png" alt="Example Image", width="160" height="50"></td>
+              <td> <center>0.76</center></td>
+              <td> <center>Accept</center></td> <!-- Added cell -->
+            </tr>
+
+
+            <tr>
+                <td> Bob: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MPGR0_Bob_enroll.wav" type="audio/wav"></audio><br>
+                  Embedding: <img src="embs/bob_enroll.png" alt="Example Image", width="160" height="50"></td>
+                <td> Alice: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/DR2_FMJB0_Verify_Alice.WAV" type="audio/wav"></audio><br>
+                  Embedding: <img src="embs/alice_verify.png" alt="Example Image", width="160" height="50"></td>
+                <td> <center>0.059</center></td>
+                <td> <center>Reject</center></td> <!-- Added cell -->
+            </tr>
+            <tr>
+                <td> Bob: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MPGR0_Bob_enroll.wav" type="audio/wav"></audio><br>
+                  Embedding: <img src="embs/bob_enroll.png" alt="Example Image", width="160" height="50"></td>
+                <td> Tom: <audio class="class_audio" controls="" style="width:220px; height:40px"><source src="audios/MJMD0_Tom_verify.WAV" type="audio/wav"></audio><br>
+                  Embedding: <img src="embs/tom_verify.png" alt="Example Image", width="160" height="50"></td>
+                <td> <center>0.54</center></td>
+                <td> <center>Reject</center></td> <!-- Added cell -->
+            </tr>
+          </table>
 		<div style="border-top: 1px solid grey;"></div>
 
 		<div class="row">
@@ -147,83 +190,7 @@
 
 
 
-function fill_audio_table(tbody_id, techniques, task, num_examples, audio_width){
-	for(var i = 1; i < num_examples + 1; i++){
-		var tr_string = '<tr>';
-		for(var j = 0; j < techniques.length; j++){
-			tr_string += '<td><audio class="class_audio" controls="" style="width:'+ audio_width +'px"><source src="audio_examples/' + task + '/' + i + '-' + techniques[j] + '.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>';
-		}
-		tr_string += "</tr>"
-		$("#" + tbody_id).append(tr_string)
-	}
-}
 
-function fill_text_table(tbody_id, techniques, transcripts, task, num_examples, audio_width){
-	for(var i = 0; i < num_examples; i++){
-		if (i%2 == 0) { 
-		var tr_string = '<tr>';
-		//tr_string += '<td><audio class="class_audio" controls="" style="width:'+ audio_width +'px"><source src="audio_examples/' + task + '/' + i + '-' + techniques[0] + '.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>';
-		//tr_string += '<td>' + transcripts[i-1]  + '</td>';
-		for(var j = 1; j < techniques.length+1; j++){
-			var row = (i)/2+1;
-			console.log(row + '-' + techniques[j-1]);
-			tr_string += '<td><audio class="class_audio" controls="" style="width:'+ audio_width +'px"><source src="audio_examples/' + task + '/' + row + '-' + techniques[j-1] + '.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>';
-		}
-		tr_string += "</tr>"
-		$("#" + tbody_id).append(tr_string)
-	}
-		else {
-			var tr_string = '<tr>';
-		for(var j = 1; j < techniques.length+1; j++){
-			// var text =  transcripts[0][0];
-			var row = (i+1)/2;
-			console.log(i, row);
-			tr_string += '<td>' + transcripts[row-1][j-1]  + '</td>';
-		}
-		tr_string += "</tr>"
-		$("#" + tbody_id).append(tr_string)
-	}
-		
-	}
-}
-
-
-var num_samples = 10;
-let tech = ["benign", "AE", "Down-Up", "LPC", "Quant", "ANR", "SNR", "Ours"];
-
-var cw_trans = 
-[["play some music", "call my mom","h on mogl","he sud misic","plal some music","plac some music","lasa isac","play somusice"],
-["play some music", "cancel my alarm"," o mol","is sic","play som music","placsome music","playaac","playe so music"],
-["play some music", "tell me the password","ol","e sud meslyc","tl some ne sor"," play some yeser","lac otinsec","play some usic"],
-["play some music", "go to the police"," on mogle","he sud esic","e so thensic","ac some music","play usic","place some music"],
-["play some music", "turn off the bluetooth"," wh on mogal","from sudn usic","in of the blusith","fan some music","e sa music","play some music"]]
-
-fill_text_table("cw_tbody", tech, cw_trans, "CW", num_samples, 130);
-
-
-var num_samples = 10;
-let tech_qin = ["benign", "AE", "Down-Up", "LPC", "Quant", "ANR", "SNR", "Ours"];
-
-var qin_trans = 
-[["to many experts this trend was inevitable", "call my mom","grimaud or poor horrible the lovable","when he experts this trend was inevitable","to many experts this tran was inevitable","to many experts this tran was inevitable","to many experts this was heaven","to many experts this tread was inevitable"],
-["to many experts this trend was inevitable", "cancel my alarm","grimaud or poor horrible the lovable","when he experts this trend was inevitable","to many experts this trend was inevitable","to many experts this tran was inevitablec","to many experts this was heaven","to many experts this tread was inevitable"],
-["to many experts this trend was inevitable", "tell me the password","koumauakov who powerful the lovable","from six months this train was inevitable","to many expert this tran was inevitable","to many experts this tran was inevitable","to many experts this was applicable","to many experts this friend was inevitable"],
-["to many experts this trend was inevitable", "go to the police","glorical or powerful the love of all","from whom hexburnts this tran was inevitable","to many exb this tran was inevitable","to many experts this trait was inevitable","to many experts this problem","to many experts this tread was inevitable"],
-["to many experts this trend was inevitable", "turn off the bluetooth","the voloogul who called all the world of the hall","his parents the strength was inevitable","to many experts this trend was ivitable","to many experts this trait was hippo","many experts this was hippon","to many experts this tread was inevitable"]]
-
-fill_text_table("qin_tbody", tech_qin, qin_trans, "QIN", num_samples, 130);
-
-var num_samples = 10;
-let sp_qin = ["benign", "AE", "Down-Up", "LPC", "Quant", "ANR", "SNR", "Ours"];
-
-var sp_trans = 
-[["jane may earn more money by working hard", "call my mom","call more al more morabole all"," er wor but eb wor ita on","call ma er more money by workhing hard","mr more money by workings mar","i werk i fon","aed ma earn more money by work you hard"],
-["jane may earn more money by working hard", "cancel my alarm","call more al more morabole all"," er wor butebl work ito on","canbac r more money by workhing a hard","mony by workis far","i were ty pan","cai te eran more money by worth you  hard"],
-["jane may earn more money by working hard", "tell me the password","call more al more morabole all"," wor but o wat he a ond","tell ma er or money by working hard","r more money by workins pard","i work is fon","thenly make earn more money by woring hard"],
-["jane may earn more money by working hard", "go to the police","call more al more morabole all"," wor but o wan he a ond","g mor money by working  hard","r more money by workins pard","i werk te fon","te ta earn more money by working hard"],
-["jane may earn more money by working hard", "turn off the bluetooth","call more al more morable hall","t beer wore buteble wor in o on","t m er ore money by work ing  hard","s ta erm ore money by workis hart","i work y fon","te ay may earn more money by working hard"]]
-
-fill_text_table("sp_tbody", sp_qin, sp_trans, "SP", num_samples, 130);
 
 
 
